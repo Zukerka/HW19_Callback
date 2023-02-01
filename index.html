@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const menuList = {
+            burger: [
+                {
+                    name: '🍔',
+                    time: 3000
+                },
+                {
+                    name: '🍟',
+                    time: 1000
+                },
+                {
+                    name: '🥤',
+                    time: 500
+                }
+            ],
+            chicken: [
+                {
+                    name: '🍗',
+                    time: 5000
+                },
+                {
+                    name: '🥔',
+                    time: 2000
+                },
+                {
+                    name: '🍺',
+                    time: 1500
+                }
+            ],
+            avocado: [
+                {
+                    name: '🥑',
+                    time: 3000
+                },
+                {
+                    name: '🍚',
+                    time: 5000
+                },
+                {
+                    name: '🧉',
+                    time: 2000
+                }
+            ]
+        };
+
+        const condition = Math.ceil(Math.random()*10) < 8;
+
+        function createOrder(menuItem) {
+            console.log('Start cooking order...');
+
+            const result = [];
+
+            menuItem.forEach(({ name, time }) => {
+                setTimeout(() => {
+                    const fulfilledResult = {
+                        status: 'fulfilled',
+                        value: name
+                    };
+
+                    const rejectedResult = {
+                        status: 'rejected',
+                        reason: name
+                    };
+
+                    if (condition) {
+                        result.push(fulfilledResult);
+                    } else {
+                        result.push(rejectedResult);
+                    }                    
+                }, time)
+            })
+        }
+
+        const res = createOrder(menuList.chicken);
+
+        console.log(res);
+    </script>
+</body>
+
+</html>
