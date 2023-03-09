@@ -55,37 +55,33 @@
             ]
         };
 
-        const condition = Math.ceil(Math.random()*10) < 8;
 
-        function createOrder(menuItem) {
+        function createOrder(menuItem, callback) {
             console.log('Start cooking order...');
 
-            const result = [];
+            const results = [];
+               let counter = 0;  
 
-            menuItem.forEach(({ name, time }) => {
+            menuItem.forEach(({ name, time }, index) => {
+                const condition = Math.ceil(Math.random()*10) < 8;
                 setTimeout(() => {
-                    const fulfilledResult = {
-                        status: 'fulfilled',
-                        value: name
+                    const result = {
+                        value: name,
+                        status: condition ? 'fulfilled' : 'rejected'
                     };
 
-                    const rejectedResult = {
-                        status: 'rejected',
-                        reason: name
-                    };
-
-                    if (condition) {
-                        result.push(fulfilledResult);
-                    } else {
-                        result.push(rejectedResult);
-                    }                    
+                     results[index] = result; 
+                        counter++
+                        
+                        if (counter === menuItem.length) {
+                            callback(results);
+                        }
                 }, time)
             })
         }
 
-        const res = createOrder(menuList.chicken);
+        const res = createOrder(menuList.avocado, (result) => console.log(result));
 
-        console.log(res);
     </script>
 </body>
 
